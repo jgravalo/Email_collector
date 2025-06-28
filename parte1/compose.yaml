@@ -1,4 +1,4 @@
-version: "3"
+# version: "3"
 
 services:
   db:
@@ -13,6 +13,11 @@ services:
     - MYSQL_COLLATION_SERVER=utf8mb4_unicode_ci
     volumes:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
   app:
     container_name: atc_app
     build: app

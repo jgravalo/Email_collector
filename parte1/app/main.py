@@ -1,8 +1,9 @@
 import mysql.connector
+import time
 
 def main():
 	print('Conectando a la base de datos...')
-	for i in range(10):
+	for i in range(30):
 		try:
 			conn = mysql.connector.connect(
 				host="db",
@@ -13,7 +14,7 @@ def main():
 			break
 		except mysql.connector.Error as e:
 			print(f"Intento {i+1}: Esperando a que MySQL esté listo... ({e})")
-			time.sleep(3)
+			time.sleep(4)
 	else:
 		raise Exception("No se pudo conectar a MySQL después de varios intentos.")
 	print('Conexión exitosa a la base de datos.')
