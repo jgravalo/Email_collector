@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS emails (
     FOREIGN KEY (client_id) REFERENCES clientes(id)
 );
 
+
 -- INSERTS en la tabla 'clientes'
 INSERT INTO clientes (nombre, email)
 VALUES 
@@ -72,7 +73,11 @@ VALUES
 ('Raul', 'raul@test.com'),
 ('Yolanda', 'yolanda@test.com'),
 ('Gonzalo', 'gonzalo@test.com'),
-('Leticia', 'leticia@test.com');
+('Leticia', 'leticia@test.com'),
+('Cliente47', 'cliente47@test.com'),
+('Cliente48', 'cliente48@test.com'),
+('Cliente49', 'cliente49@test.com'),
+('Cliente50', 'cliente50@test.com');
 
 -- INSERTS en la tabla 'impagos'
 INSERT INTO impagos (client_id, fecha_impago)

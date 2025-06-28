@@ -54,3 +54,5 @@ con un campo llamado `prediccion`, que contendrá una cadena de texto con la pre
 
 En caso de que el cliente figure entre los impagados, el endpoint devolverá un código de estado 200 y un objeto JSON
 con un campo `exito` con valor `false` y un campo `razon` con el mensaje "El cliente tiene impagos".
+
+**Modificaciones realizadas en el script de carga de datos**: Se añadieron los clientes 47 a 50 con datos ficticios para resolver referencias cruzadas, garantizando integridad de claves foráneas y consistencia para la prueba de clasificación. El resto del pipeline sigue la definición original.

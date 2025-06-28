@@ -1,5 +1,5 @@
 all:
-	docker-compose up --build
+	docker-compose up --build -d
 
 down:
 	docker-compose down
@@ -42,4 +42,6 @@ clean: down
 	@docker network rm $$(docker network ls -q --filter type=custom) 2>/dev/null || true
 #	docker-compose rm -f
 
-.PHONY: all clean
+re: clean all
+
+.PHONY: all down ls clean re
