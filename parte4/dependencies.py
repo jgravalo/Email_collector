@@ -1,11 +1,10 @@
-from base import NaturalLanguageConfigParser, ClassifierDeserializer
+from my_classifier import (
+    SimpleNaturalLanguageConfigParser,
+    SimpleClassifierDeserializer
+)
 
+def get_nl_config_parser():
+    return SimpleNaturalLanguageConfigParser()
 
-def get_nl_config_parser() -> NaturalLanguageConfigParser:
-    # TODO Instanciar un NaturalLanguageConfigParser
-    return ...
-
-
-def get_classifier_deserializer() -> ClassifierDeserializer:
-    # TODO Instanciar un ClassifierDeserializer
-    return ...
+def get_classifier_deserializer():
+    return SimpleClassifierDeserializer()

@@ -110,3 +110,7 @@ class TestNaturalLanguageClassifier(unittest.TestCase):
 
     def _build_classifier(self, nl_description: str) -> WrappedClassifier:
         return WrappedClassifier(nl_description, self._nl_config_parser, self._classifier_deserializer)
+
+if __name__ == "__main__":
+    import unittest
+    unittest.main(verbosity=2)

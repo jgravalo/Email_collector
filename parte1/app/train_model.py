@@ -4,27 +4,40 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from load_data import load_data
+import re
 
 # categorías manuales aproximadas
 def asignar_categoria(texto):
     texto = texto.lower()
-    if "factura" in texto:
-        return "facturacion"
-    elif "contrato" in texto:
-        return "contrato"
-    elif "baja" in texto or "cancelar" in texto:
-        return "baja"
-    elif "tarifa" in texto or "precio" in texto:
-        return "tarifas"
-    elif "suministro" in texto or "corte" in texto:
-        return "incidencia"
-    else:
-        return "otros"
+    texto = re.sub(r'[^\w\s]', '', texto)  # elimina signos de puntuación
+
+    # diccionario de categorias -> lista de palabras clave
+    categorias = {
+        "facturacion": ["factura", "historial"],
+        "contrato": ["contrato", "datos"],
+        "altas y bajas": ["contratar", "alta", "baja", "cancelar"],
+        "tarifas": ["tarifa", "precio", "descuento", "oferta", "promocion", "plan"],
+        "incidencia": ["suministro", "corte", "asistencia", "problema"],
+    }
+
+    for categoria, palabras in categorias.items():
+        if any(p in texto for p in palabras):
+            return categoria
+
+    return "otros"
+
 
 def train_model():
     emails = load_data()
     emails['categoria'] = emails['email'].apply(asignar_categoria)
+    for idx, email in emails.iterrows():
+        print(f"({email['categoria']}); {email['email']})")
+        # print(f"{email['id']}: ({email['categoria']}); {email['email']})")
 
+    """
+    for categoria, cantidad in emails['categoria'].value_counts().items():
+        print(f"Categoría: {categoria}, Cantidad: {cantidad}")
+    """
     X = emails['email']
     y = emails['categoria']
 
@@ -36,7 +49,7 @@ def train_model():
     pipeline.fit(X, y)
 
     joblib.dump(pipeline, 'modelo.joblib')
-    print("✅ Modelo entrenado y guardado en modelo.joblib")
+    print("Modelo entrenado y guardado en modelo.joblib")
 
     # exportar csv de predicciones
     predicciones = pipeline.predict(X)

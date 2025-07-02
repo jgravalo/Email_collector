@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import mysql.connector
+from train_model import asignar_categoria
 
 app = FastAPI()
 
@@ -37,7 +38,9 @@ def classify_email(data: EmailEntrada):
 
     # si no tiene impagos, clasificamos el cuerpo
     prediccion = modelo.predict([data.email_body])[0]
+    categoria = asignar_categoria(data.email_body)
     return {
         "exito": True,
-        "prediccion": prediccion
+        # "prediccion": prediccion
+        "prediccion": categoria
     }
